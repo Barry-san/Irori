@@ -1,7 +1,4 @@
 import { UseFormRegisterReturn } from "react-hook-form";
-
-import React from "react";
-
 type selecFieldProps = {
   options: string[];
   registration: UseFormRegisterReturn;

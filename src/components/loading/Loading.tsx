@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Loading = () => {
   return (
     <div className="w-full grid place-content-center h-screen bg-blue-500">

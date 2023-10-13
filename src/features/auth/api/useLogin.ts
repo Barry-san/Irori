@@ -7,7 +7,6 @@ import {
 import { auth } from "src/firebaseconfig";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addUserToDb } from ".";
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ export default function useLogin() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithRedirect(auth, provider);
-      addUserToDb();
+      // addUserToDb();
       setPending(false);
       navigate("/");
     } catch (error) {
