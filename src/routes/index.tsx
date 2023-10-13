@@ -1,9 +1,8 @@
 import { useRoutes } from "react-router-dom";
 import { publicRoutes } from "./public";
-import { protectedRoutes } from "./protected";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-// import { HomeRoute } from "src/features/home/routes";
-import { Home } from "src/features/home/components/Home";
+import { Suspense, lazy } from "react";
+import Post from "src/features/posts/routes/Post";
 
 function AppRoutes() {
   const auth = getAuth();
@@ -16,10 +15,35 @@ function AppRoutes() {
     }
   });
   const user = localStorage.getItem("currentUser");
-  const commonRoutes = [{ path: "/", element: <Home></Home> }];
+  const Home = lazy(() => import("src/features/home/components/Home"));
+  const Register = lazy(() => import("src/features/auth/components/Register"));
+  const Login = lazy(() => import("src/features/auth/components/Login"));
+  const CreatePost = lazy(
+    () => import("src/features/posts/routes/CreatePostRoute")
+  );
+  const commonRoutes = [
+    { path: "/", element: <Home /> },
+    { path: "/post/:id", element: <Post /> },
+  ];
+  const protectedRoutes = [
+    { path: "/auth/login", element: <Login /> },
+    { path: "/auth/register", element: <Register /> },
+    { path: "/post/new", element: <CreatePost /> },
+  ];
   const routes = user ? protectedRoutes : publicRoutes;
+
   const element = useRoutes([...routes, ...commonRoutes]);
-  return <>{element}</>;
+  return (
+    <Suspense
+      fallback={
+        <div>
+          <p>Loading...</p>
+        </div>
+      }
+    >
+      {element}
+    </Suspense>
+  );
 }
 
 export default AppRoutes;

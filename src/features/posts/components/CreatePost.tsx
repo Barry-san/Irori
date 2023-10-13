@@ -1,13 +1,14 @@
+import { postData } from "../types";
 import { InputField, SelectField, TextField } from "components/forms";
+import { useCreatePost } from "features/posts/api/useCreatePost";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useCreatePost } from "features/posts/api/useCreatePost";
-import { useState } from "react";
-import { postData } from "../types";
+import { useRef, useState } from "react";
 import { User } from "firebase/auth";
+import { useUploadImage } from "../api/useUploadImage";
+import { toast } from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useUploadImage } from "../api/useUploadImage";
 
 type PostFormData = {
   postTitle: string;
@@ -16,12 +17,13 @@ type PostFormData = {
   postDescription: string;
   postThumbnail: FileList;
 };
-export const CreatePost = () => {
+const CreatePost = () => {
+  const [value, setValue] = useState("");
   const { register, handleSubmit } = useForm<PostFormData>();
   const createPost = useCreatePost();
-  const [value, setValue] = useState("");
   const navigate = useNavigate();
   const UploadImage = useUploadImage();
+  const btnRef = useRef<null | HTMLButtonElement>(null);
 
   const onSubmit = ({
     postTitle,
@@ -29,6 +31,7 @@ export const CreatePost = () => {
     postDescription,
     postThumbnail,
   }: PostFormData) => {
+    toast("uploadin post....");
     const post: postData = {
       head: {
         title: postTitle,
@@ -42,9 +45,16 @@ export const CreatePost = () => {
       },
       body: { content: value },
     };
-    UploadImage(postThumbnail.item(0)!).then((res) => {
-      post.head.thumbnail = res;
-      createPost(post).then(() => navigate("/"));
+    UploadImage(postThumbnail.item(0)!).then(({ url, error }) => {
+      btnRef.current?.setAttribute("disabled", "true");
+      if (!error) {
+        post.head.thumbnail = url;
+        createPost(post)
+          .then(() => navigate("/"))
+          .catch(alert);
+      } else {
+        toast(String(error));
+      }
     });
   };
   return (
@@ -59,13 +69,16 @@ export const CreatePost = () => {
                 value: 100,
                 message: "Maximum of 100 characters",
               },
+              required: { value: true, message: "this field is required" },
             }),
           }}
-          className="text-xl font-sans p-6 cursor-text md:text-3xl lg:text-5xl w-4/5"
+          className="text-xl font-sans p-6 cursor-text md:text-3xl lg:text-5xl w-full"
         />
         <SelectField
           options={["art", "science", "general", "culture", "lifestyle"]}
-          registration={{ ...register("category") }}
+          registration={{
+            ...register("category", { required: "this field is required" }),
+          }}
           placeholder="Category"
         />
         <TextField
@@ -102,6 +115,7 @@ export const CreatePost = () => {
         <button
           role="submit"
           className="border py-4 bg-indigo-400 border-slate-600"
+          ref={btnRef}
         >
           submit post
         </button>
@@ -109,3 +123,5 @@ export const CreatePost = () => {
     </div>
   );
 };
+
+export default CreatePost;

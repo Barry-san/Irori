@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-
-import { CreatePostRoute } from "./CreatePostRoute";
-import { Post } from "./Post";
+import CreatePostRoute from "./CreatePostRoute";
+import Post from "./Post";
 
 export const PostRoutes = () => {
   return (

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Register } from "features/auth/components/Register";
+import Register from "features/auth/components/Register";
 import Login from "features/auth/components/Login";
 
 export const AuthRoutes = () => {

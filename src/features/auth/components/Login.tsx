@@ -10,7 +10,7 @@ type formData = {
   password: string;
 };
 
-const authStyle = "p-2 border-black border";
+export const authStyle = "p-2 border-black border";
 
 function Login() {
   const { register, control, handleSubmit, formState } = useForm<formData>();
@@ -44,6 +44,7 @@ function Login() {
             error={errors.email?.message}
           />
           <InputField
+            className={authStyle}
             label="password : "
             type="password"
             registration={{
@@ -56,7 +57,7 @@ function Login() {
           />
           <button
             type="submit"
-            className="w-48 h-10 border text-white bg-blue-600"
+            className=" border-black border p-2 bg-violet-400"
             disabled={pending}
           >
             {pending ? "loading..." : "Login"}

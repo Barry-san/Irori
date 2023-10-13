@@ -4,6 +4,7 @@ import { AuthLayout } from "./Layout";
 import { useRegister } from "../api/useRegister";
 import { DevTool } from "@hookform/devtools";
 import { Link } from "react-router-dom";
+import { authStyle } from "..";
 
 type RegisterData = {
   email: string;
@@ -11,7 +12,7 @@ type RegisterData = {
   firstName: string;
   lastname: string;
 };
-export const Register = () => {
+const Register = () => {
   const { register, handleSubmit, control, formState } =
     useForm<RegisterData>();
   const { errors } = formState;
@@ -20,7 +21,7 @@ export const Register = () => {
     <div>
       <AuthLayout title="Register">
         <form
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 p-10"
           onSubmit={handleSubmit((data) =>
             registerUser(
               data.email,
@@ -32,17 +33,20 @@ export const Register = () => {
           noValidate
         >
           <InputField
+            className={authStyle}
             label="first"
             type="text"
             registration={{ ...register("firstName") }}
           />
           <InputField
+            className={authStyle}
             label="last name"
             type="text"
             registration={{ ...register("lastname") }}
           />
 
           <InputField
+            className={authStyle}
             label="Email :"
             type="email"
             registration={{
@@ -60,6 +64,7 @@ export const Register = () => {
             error={errors.email?.message}
           />
           <InputField
+            className={authStyle}
             label="Password :"
             type="password"
             registration={{
@@ -72,7 +77,7 @@ export const Register = () => {
           />
           <button
             type="submit"
-            className="border border-black text-center w-48 h-10 bg-blue-600 text-white"
+            className=" border-black border p-2 bg-violet-400"
             disabled={pending}
           >
             {pending ? "Loading..." : "register"}
@@ -89,3 +94,4 @@ export const Register = () => {
     </div>
   );
 };
+export default Register;

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: Raleway, sans-serif;
+    src: url(assets/Raleway_web/raleway-variablefont_wght-webfont.woff);
+}
+
+@font-face {
+    font-family: 'PlayFair Display', sans-serif;
+    src: url(assets/Fairdisplay/playfairdisplay-variablefont_wght-webfont.woff);
+}
+
+li {
+    list-style: initial;
+}
