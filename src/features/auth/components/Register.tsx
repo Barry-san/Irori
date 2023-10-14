@@ -5,6 +5,8 @@ import { useRegister } from "../api/useRegister";
 import { DevTool } from "@hookform/devtools";
 import { Link } from "react-router-dom";
 import { authStyle } from "..";
+import { addUserToDb } from "../api";
+import { auth } from "src/firebaseconfig";
 
 type RegisterData = {
   email: string;
@@ -28,19 +30,21 @@ const Register = () => {
               data.password,
               data.firstName,
               data.lastname
-            ).catch(alert)
+            )
+              .catch(alert)
+              .then(() => addUserToDb(auth.currentUser!))
           )}
           noValidate
         >
           <InputField
             className={authStyle}
-            label="first"
+            label="First name:"
             type="text"
             registration={{ ...register("firstName") }}
           />
           <InputField
             className={authStyle}
-            label="last name"
+            label="Last name"
             type="text"
             registration={{ ...register("lastname") }}
           />
@@ -77,13 +81,13 @@ const Register = () => {
           />
           <button
             type="submit"
-            className=" border-black border p-2 bg-violet-400"
+            className=" border-black border p-2 bg-indigo-400"
             disabled={pending}
           >
             {pending ? "Loading..." : "register"}
           </button>
         </form>
-        <p>
+        <p className="text-center">
           alreay have an account?{" "}
           <Link to={"/auth/login"} className="text-blue-600 text-center">
             login

@@ -10,7 +10,7 @@ type formData = {
   password: string;
 };
 
-export const authStyle = "p-2 border-black border";
+export const authStyle = "p-2 border-black border w-full";
 
 function Login() {
   const { register, control, handleSubmit, formState } = useForm<formData>();
@@ -24,7 +24,7 @@ function Login() {
     <div className="login">
       <AuthLayout title="Login">
         <form
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 bg-fuchsia-100 items-stretch"
           onSubmit={handleSubmit(OnSubmit)}
           noValidate
         >
@@ -57,7 +57,7 @@ function Login() {
           />
           <button
             type="submit"
-            className=" border-black border p-2 bg-violet-400"
+            className=" border-black border p-2 bg-indigo-400"
             disabled={pending}
           >
             {pending ? "loading..." : "Login"}

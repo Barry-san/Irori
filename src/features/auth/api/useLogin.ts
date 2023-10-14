@@ -7,6 +7,7 @@ import {
 import { auth } from "src/firebaseconfig";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -20,10 +21,14 @@ export default function useLogin() {
           setPending(false);
           navigate("/");
         })
-        .catch(() => setPending(false));
+        .catch(() => {
+          setPending(false);
+          toast("something went wrong");
+        });
     } catch (error) {
       setPending(false);
       if (error instanceof FirebaseError) {
+        toast.error("something went wrong");
         console.log(error.message);
       }
       setPending(false);
