@@ -19,7 +19,8 @@ type PostFormData = {
 };
 const CreatePost = () => {
   const [value, setValue] = useState("");
-  const { register, handleSubmit } = useForm<PostFormData>();
+  const { register, handleSubmit, formState } = useForm<PostFormData>();
+  const { errors } = formState;
   const createPost = useCreatePost();
   const navigate = useNavigate();
   const UploadImage = useUploadImage();
@@ -31,7 +32,7 @@ const CreatePost = () => {
     postDescription,
     postThumbnail,
   }: PostFormData) => {
-    toast("uploadin post....");
+    toast("uploading post....", { position: "top-right" });
     const post: postData = {
       head: {
         title: postTitle,
@@ -53,7 +54,9 @@ const CreatePost = () => {
           .then(() => navigate("/"))
           .catch(alert);
       } else {
-        toast(String(error));
+        toast.error(
+          "An error occured. Please check your network and try again "
+        );
       }
     });
   };
@@ -74,6 +77,7 @@ const CreatePost = () => {
           }}
           className="text-xl font-sans p-6 cursor-text md:text-3xl lg:text-5xl w-full"
         />
+        <p className="text-red-600">{errors.postTitle?.message}</p>
         <SelectField
           options={["art", "science", "general", "culture", "lifestyle"]}
           registration={{
@@ -81,6 +85,7 @@ const CreatePost = () => {
           }}
           placeholder="Category"
         />
+        <p className="text-red-600">{errors.postTitle?.message}</p>
         <TextField
           placeholder="enter the post description here... maximum 400 characters"
           columns={25}
@@ -97,6 +102,8 @@ const CreatePost = () => {
           }}
           className="md:text-2xl p-4 w-full"
         />
+        <p className="text-red-600">{errors.postTitle?.message}</p>
+
         <ReactQuill
           theme="snow"
           value={value}
@@ -112,6 +119,7 @@ const CreatePost = () => {
           })}
           className="w-52 h-24 border-dashed border border-black"
         />
+        <p className="text-red-600">{errors.postTitle?.message}</p>
         <button
           role="submit"
           className="border py-4 bg-indigo-400 border-slate-600"
