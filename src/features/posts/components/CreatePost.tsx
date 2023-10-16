@@ -9,7 +9,6 @@ import { useUploadImage } from "../api/useUploadImage";
 import { toast } from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { DevTool } from "@hookform/devtools";
 
 type PostFormData = {
   postTitle: string;
@@ -129,7 +128,6 @@ const CreatePost = () => {
           submit post
         </button>
       </form>
-      <DevTool />
     </div>
   );
 };
