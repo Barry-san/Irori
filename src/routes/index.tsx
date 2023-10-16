@@ -21,9 +21,11 @@ function AppRoutes() {
   const CreatePost = lazy(
     () => import("src/features/posts/routes/CreatePostRoute")
   );
+  const Profile = lazy(() => import("src/features/profile/routes/Profile"));
   const commonRoutes = [
     { path: "/", element: <Home /> },
     { path: "/post/:id", element: <Post /> },
+    { path: "/profile/:id", element: <Profile /> },
   ];
   const protectedRoutes = [
     { path: "/auth/login", element: <Login /> },
@@ -36,7 +38,7 @@ function AppRoutes() {
   return (
     <Suspense
       fallback={
-        <div>
+        <div className="w-full h-screen grid place-content-center">
           <p>Loading...</p>
         </div>
       }

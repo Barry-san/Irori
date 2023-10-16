@@ -13,7 +13,7 @@ export const ViewProfile = () => {
       {data && (
         <div>
           <p className="text-xl md:text-3x lg:text-4xl">
-            {data.data()?.userName || "this is it"}
+            {data.data()?.userName || "this user does not exist"}
           </p>
           <p className="text-lg md:text-xl lg:text-2xl">
             Joined : {data.data()?.joinDate}
