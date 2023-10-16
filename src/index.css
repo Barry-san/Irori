@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: Raleway, sans-serif;
+    font-family: Raleway;
     src: url(assets/Raleway_web/raleway-variablefont_wght-webfont.woff);
 }
 
 @font-face {
-    font-family: 'PlayFair Display', sans-serif;
+    font-family: 'PlayFair Display';
     src: url(assets/Fairdisplay/playfairdisplay-variablefont_wght-webfont.woff);
 }
 
