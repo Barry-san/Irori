@@ -6,7 +6,7 @@ export function Navlinks({ links }: navlinkProps) {
   return (
     <>
       {links.map((link) => (
-        <Link to={link.path} key={link.title}>
+        <Link to={link.path} key={link.title} className="">
           {link.title}
         </Link>
       ))}
