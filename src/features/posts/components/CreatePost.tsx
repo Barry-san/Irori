@@ -114,10 +114,11 @@ const CreatePost = () => {
         <input
           type="file"
           accept="image/*"
-          {...register("postThumbnail", {
-            required: "please select an image for the thumbnail.",
-          })}
+          // {...register("postThumbnail", {
+          //   required: "please select an image for the thumbnail.",
+          // })}
           className="w-52 h-24 border-dashed border border-black"
+          onChange={(e) => UploadImage(e.target.files!.item(0)!)}
         />
         <p className="text-red-600">{errors.postTitle?.message}</p>
         <button

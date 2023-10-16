@@ -21,7 +21,7 @@ const ViewPost = () => {
       ) : isSuccess ? (
         <div className="mx-auto p-4 flex flex-col gap-4 md:w-9/12 lg:w-7/12">
           <div className="flex flex-col gap-2">
-            <h1 className="font-bold text-xl text-center md:text-3xl lg:text-4xl">
+            <h1 className="font-bold text-xl text-center md:text-3xl lg:text-4xl font-display">
               {post?.head?.title}
             </h1>
             <p className="text-center font-semibold italic underline">
@@ -32,7 +32,7 @@ const ViewPost = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post?.body?.content }}
-            className="font-body"
+            className="font-body font-light"
           ></div>
         </div>
       ) : (

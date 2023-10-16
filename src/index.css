@@ -1,16 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-    font-family: Raleway;
-    src: url(assets/Raleway_web/raleway-variablefont_wght-webfont.woff);
-}
-
-@font-face {
-    font-family: 'PlayFair Display';
-    src: url(assets/Fairdisplay/playfairdisplay-variablefont_wght-webfont.woff);
-}
 
 li {
     list-style: initial;

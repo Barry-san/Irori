@@ -13,7 +13,7 @@ export const Navigation = () => {
         { path: "/auth/login", title: "Login" },
       ];
   return (
-    <nav className="w-full sticky top-0 min-h-4  flex justify-between items-center p-4 md:px-16 font-sans font-medium text-xl z-10 bg-yellow-200 ">
+    <nav className="w-full sticky top-0 min-h-4  flex justify-between items-center p-4 md:px-16 font-sans font-medium text-xl z-10 bg-neutral-100 ">
       <Link to={"/"} className="">
         <span className="text-indigo-600 font-bold">Irori</span>
       </Link>
