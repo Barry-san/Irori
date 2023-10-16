@@ -21,14 +21,14 @@ export default function useLogin() {
           setPending(false);
           navigate("/");
         })
-        .catch(() => {
+        .catch((err) => {
           setPending(false);
-          toast("something went wrong");
+          toast.error(err.message, { position: "top-right", duration: 2500 });
         });
     } catch (error) {
       setPending(false);
       if (error instanceof FirebaseError) {
-        toast.error("something went wrong");
+        toast.error(error.message);
         console.log(error.message);
       }
       setPending(false);
