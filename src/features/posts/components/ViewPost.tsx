@@ -32,7 +32,7 @@ const ViewPost = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post?.body?.content }}
-            className=""
+            className="font-body"
           ></div>
         </div>
       ) : (
