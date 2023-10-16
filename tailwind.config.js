@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"PlayFair Display"'],
+        display: ["'PlayFair Display'", "monospace"],
+        body: ["Raleway", "san serif"],
       },
     },
   },
