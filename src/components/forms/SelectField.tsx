@@ -14,7 +14,7 @@ export const SelectField = ({
       {...registration}
       className="px-8 py-2 border border-black text-lg "
     >
-      <option value="" selected disabled hidden>
+      <option selected disabled hidden>
         {placeholder}
       </option>
       {options.map((option, index) => {

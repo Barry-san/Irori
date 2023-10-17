@@ -4,8 +4,6 @@ import { useGetProfile } from "../api/useGetProfile";
 export const ViewProfile = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProfile(id!);
-  console.log(data?.exists());
-  console.log(data?.data());
   return (
     <div>
       {isLoading ? <p>Loading...</p> : ""}

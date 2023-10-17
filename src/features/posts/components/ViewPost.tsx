@@ -28,7 +28,11 @@ const ViewPost = () => {
               by - {post?.head?.author}
             </p>
             <p className="italic text-center">{post?.head?.date}</p>
-            <img src={post?.head?.thumbnail} alt={post?.head?.title} />
+            <img
+              src={post?.head?.thumbnail}
+              alt={post?.head?.title}
+              className="aspect-video rounded-xl object-cover"
+            />
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post?.body?.content }}

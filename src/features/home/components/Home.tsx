@@ -8,13 +8,13 @@ const Home = () => {
   console.log(localStorage.getItem("currentUser"));
   return (
     <Layout>
-      <div className="grid grid-cols-1  lg:grid-cols-3 gap-4 mx-auto  min-h-full ">
+      <div className="grid grid-cols-1  lg:grid-cols-1 gap-4 mx-auto  min-h-full ">
         {isLoading && "loading..."}
         {data
-          ? data.docs.map((doc) => {
+          ? data.docs.map((doc, ind) => {
               const blog = doc.data() as postData;
               const id = doc.id;
-              return <BlogCard data={blog} Key={id} id={id} />;
+              return <BlogCard data={blog} Key={id} id={id} ind={ind} />;
             })
           : ""}
         {error ? "an error occured. Check your connection and try again" : ""}
