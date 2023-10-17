@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { InputField } from "src/components/forms/inputfield";
 import { AuthLayout } from "./Layout";
 import { useRegister } from "../api/useRegister";
-import { DevTool } from "@hookform/devtools";
 import { Link } from "react-router-dom";
 import { authStyle } from "..";
 import { addUserToDb } from "../api";
@@ -15,8 +14,7 @@ type RegisterData = {
   lastname: string;
 };
 const Register = () => {
-  const { register, handleSubmit, control, formState } =
-    useForm<RegisterData>();
+  const { register, handleSubmit, formState } = useForm<RegisterData>();
   const { errors } = formState;
   const { registerUser, pending } = useRegister();
   return (
@@ -98,7 +96,6 @@ const Register = () => {
           </Link>
         </p>
       </AuthLayout>
-      <DevTool control={control} />
     </div>
   );
 };
