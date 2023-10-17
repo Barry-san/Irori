@@ -9,12 +9,18 @@ type BlogCardProps = {
 
 const BlogCard = ({ id, data, Key }: BlogCardProps) => {
   return (
-    <div className="flex flex-col p-4 border border-indigo-400 " key={Key}>
+    <div className="flex flex-col p-2 border border-indigo-400 " key={Key}>
       {/* <p className="p-4">{data.head.category}</p> */}
       <Link to={`/post/${id}`} className="flex flex-col gap-2 items-center">
-        <img src={data.head.thumbnail} alt="" className="" />
+        <img
+          src={data.head.thumbnail}
+          alt=""
+          className="aspect-video object-cover object-center rounded-md"
+        />
         <h1 className="text-lg font-display font-bold">{data.head.title}</h1>
-        <p className="underline italic">{data.head.author}</p>
+        <p className="underline italic">
+          <Link to={`profile/${data.head.uid}`}>{data.head.author}</Link>
+        </p>
       </Link>
       <p className="font-body font-light">{data.head.description}</p>
     </div>

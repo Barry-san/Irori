@@ -3,9 +3,10 @@ export type postData = {
     title: string;
     category: string;
     date: string;
-    author?: string;
+    author: string;
     description: string;
-    thumbnail?: string;
+    thumbnail: string;
+    uid?: string;
   };
   body: {
     content: string;

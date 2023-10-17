@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 export const useGetPost = (postId: string) => {
   const postRef = doc(db, `posts/${postId}`);
   const { isError, isSuccess, error, isLoading, data } = useQuery(
-    ["GetPost"],
+    [`Getpost-${postId}`],
     () => {
       return getDoc(postRef);
     }

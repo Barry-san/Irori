@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
 import { InputField } from "components/forms/inputfield";
 import { AuthLayout } from "./Layout";
 import { Link } from "react-router-dom";
@@ -13,7 +12,7 @@ type formData = {
 export const authStyle = "p-2 border-black border w-full";
 
 function Login() {
-  const { register, control, handleSubmit, formState } = useForm<formData>();
+  const { register, handleSubmit, formState } = useForm<formData>();
   const { errors } = formState;
   const { handleLogin, pending } = useLogin();
   const OnSubmit = (data: formData) => {
@@ -24,7 +23,7 @@ function Login() {
     <div className="login">
       <AuthLayout title="Login">
         <form
-          className="flex flex-col gap-4 bg-fuchsia-100 items-stretch"
+          className="flex flex-col gap-4 items-stretch"
           onSubmit={handleSubmit(OnSubmit)}
           noValidate
         >
@@ -70,7 +69,6 @@ function Login() {
           </Link>
         </p>
       </AuthLayout>
-      <DevTool control={control} />
     </div>
   );
 }
