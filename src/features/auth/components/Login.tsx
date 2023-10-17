@@ -9,7 +9,7 @@ type formData = {
   password: string;
 };
 
-export const authStyle = "p-2 border-black border w-full";
+export const authStyle = "p-2 border-black border w-full placeholder:text-sm";
 
 function Login() {
   const { register, handleSubmit, formState } = useForm<formData>();
@@ -31,6 +31,7 @@ function Login() {
             className={authStyle}
             label="email : "
             type="email"
+            placeholder="Email address"
             registration={{
               ...register("email", {
                 required: { value: true, message: "this field is required" },
@@ -46,6 +47,7 @@ function Login() {
             className={authStyle}
             label="password : "
             type="password"
+            placeholder="password. min 6 characters"
             registration={{
               ...register("password", {
                 required: { value: true, message: "this field is required" },

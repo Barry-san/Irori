@@ -39,12 +39,14 @@ const Register = () => {
           <InputField
             className={authStyle}
             label="First name:"
+            placeholder="first name e.g 'John'"
             type="text"
             registration={{ ...register("firstName") }}
           />
           <InputField
             className={authStyle}
             label="Last name"
+            placeholder="last name e.g 'Doe'"
             type="text"
             registration={{ ...register("lastname") }}
           />
@@ -53,6 +55,7 @@ const Register = () => {
             className={authStyle}
             label="Email :"
             type="email"
+            placeholder="email address"
             registration={{
               ...register("email", {
                 pattern: {
@@ -71,6 +74,7 @@ const Register = () => {
             className={authStyle}
             label="Password :"
             type="password"
+            placeholder="password min 6 characters"
             registration={{
               ...register("password", {
                 minLength: { value: 6, message: "minimum of 6 characters" },
