@@ -4,7 +4,7 @@ import { db } from "src/firebaseconfig";
 
 export const useGetProfile = (id: string) => {
   return useQuery(
-    ["getProfile"],
+    [`getProfile${id}`],
     () => {
       const userRef = doc(db, `users/${id}`);
       return getDoc(userRef);

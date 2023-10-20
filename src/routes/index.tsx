@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import { publicRoutes } from "./public";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Suspense, lazy } from "react";
+import Search from "src/features/search/components/Search";
 import Post from "src/features/posts/routes/Post";
 
 function AppRoutes() {
@@ -22,10 +23,12 @@ function AppRoutes() {
     () => import("src/features/posts/routes/CreatePostRoute")
   );
   const Profile = lazy(() => import("src/features/profile/routes/Profile"));
+
   const commonRoutes = [
     { path: "/", element: <Home /> },
     { path: "/post/:id", element: <Post /> },
     { path: "/profile/:id", element: <Profile /> },
+    { path: "/s", element: <Search /> },
   ];
   const protectedRoutes = [
     { path: "/auth/login", element: <Login /> },

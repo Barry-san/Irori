@@ -29,7 +29,7 @@ const ViewPost = () => {
             <img
               src={post.head.thumbnail}
               alt={post.head.title}
-              className="aspect-video object-contain md:w-[80%] mx-auto rounded-lg"
+              className="aspect-video object-cover md:max-w-[80vw] mx-auto rounded-lg"
             />
           </div>
           <div className="text-center gap-4 justify-center">

@@ -3,28 +3,28 @@ import { InputField, SelectField, TextField } from "components/forms";
 import { useCreatePost } from "features/posts/api/useCreatePost";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { User } from "firebase/auth";
 import { useUploadImage } from "../api/useUploadImage";
 import { toast } from "react-hot-toast";
 import ReactQuill from "react-quill";
+import CreateDraft from "../api/useCreateDraft";
 import "react-quill/dist/quill.snow.css";
 
 type PostFormData = {
   postTitle: string;
   category: string;
-  postContent: string;
   postDescription: string;
   postThumbnail: FileList;
 };
 const CreatePost = () => {
   const [value, setValue] = useState("");
-  const { register, handleSubmit, formState } = useForm<PostFormData>();
+  const { register, handleSubmit, formState, getValues } =
+    useForm<PostFormData>();
   const { errors } = formState;
   const createPost = useCreatePost();
   const navigate = useNavigate();
   const UploadImage = useUploadImage();
-  const btnRef = useRef<null | HTMLButtonElement>(null);
 
   const onSubmit = ({
     postTitle,
@@ -47,7 +47,6 @@ const CreatePost = () => {
       body: { content: value },
     };
     UploadImage(postThumbnail.item(0)!).then(({ url, error }) => {
-      btnRef.current?.setAttribute("disabled", "true");
       if (!error) {
         post.head.thumbnail = url;
         createPost(post)
@@ -62,6 +61,21 @@ const CreatePost = () => {
   };
   return (
     <div>
+      <button
+        className="border py-4 px-8 bg-white border-slate-600"
+        role="none"
+        onClick={() => {
+          const { postDescription, postTitle, category } = getValues();
+          CreateDraft({
+            postContent: value,
+            postTitle,
+            postDescription,
+            category,
+          });
+        }}
+      >
+        Save as draft
+      </button>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <InputField
           type="text"
@@ -100,7 +114,7 @@ const CreatePost = () => {
               },
             }),
           }}
-          className="md:text-2xl p-4 w-full"
+          className="md:text-xl p-4 w-full"
         />
         <p className="text-red-600">{errors.postTitle?.message}</p>
 
@@ -110,6 +124,7 @@ const CreatePost = () => {
           onChange={setValue}
           placeholder="Enter the post content here "
           className="bg-inherit text-xl"
+          style={{ fontSize: 40 }}
         />
         <input
           type="file"
@@ -118,13 +133,13 @@ const CreatePost = () => {
             required: "please select an image for the thumbnail.",
           })}
           className="w-52 h-24 border-dashed border border-black"
-          // onChange={(e) => UploadImage(e.target.files!.item(0)!)}
         />
         <p className="text-red-600">{errors.postTitle?.message}</p>
+
         <button
           role="submit"
-          className="border py-4 bg-indigo-400 border-slate-600"
-          ref={btnRef}
+          type="submit"
+          className="border py-4 px-8 bg-indigo-400 border-slate-600"
         >
           submit post
         </button>
