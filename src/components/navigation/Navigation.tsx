@@ -1,41 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Navlinks } from "./Navlinks";
-import { auth } from "src/firebaseconfig";
-import { signOut } from "firebase/auth";
-import search from "public/search.svg";
+import { Link } from "react-router-dom";
+import habmurger from "/bars-solid.svg";
+import search from "/search.svg";
+import Menu from "./components/Menu";
+import Toggle from "./utils/menuToggle";
+import { useRef } from "react";
 export const Navigation = () => {
-  const navigate = useNavigate();
-  const user = localStorage.getItem("currentUser");
-  const linky = user
-    ? [{ path: "/post/new", title: "New post" }]
-    : [
-        { path: "/auth/register", title: "Sign Up" },
+  const ref = useRef<Element | null>(null);
 
-        { path: "/auth/login", title: "Login" },
-      ];
   return (
-    <nav className="w-full sticky top-0 min-h-4  flex justify-between items-center p-4 md:px-16 font-sans font-medium text-xl z-10 bg-neutral-100 ">
+    <nav className="w-full sticky top-0 flex justify-between items-center p-4 font-sans font-medium text-xl bg-neutral-100">
       <Link to={"/"} className="">
-        <span className="text-indigo-600 font-bold">Irori</span>
+        <span className="text-indigo-600 font-bold uppercase font-body">
+          I r o r i
+        </span>
       </Link>
       <Link to={"/s"} title="search">
         <span className="sr-only">search</span>
         <img src={search} alt="search button" />
       </Link>
       <div className="flex gap-8 justify-between items-center">
-        <Navlinks links={linky} />
-        {
-          <button
-            onClick={() => {
-              signOut(auth).then(() => {
-                navigate("/");
-              });
-            }}
-            className={`${user ? "flex" : "hidden"}`}
-          >
-            Log out
-          </button>
-        }
+        <button className="z-30" onClick={() => Toggle(ref.current)}>
+          <img alt="menu icon" src={habmurger} className="h-6 w-6" />
+        </button>
+        <Menu ref={ref} />
       </div>
     </nav>
   );

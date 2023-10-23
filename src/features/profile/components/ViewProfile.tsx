@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useGetProfile } from "../api/useGetProfile";
 import useGetUserPosts from "../api/useGetUserPosts";
-import BlogCard from "src/features/home/components/BlogCard";
-import { postData } from "src/features/posts/types";
+import BlogCard from "features/home/components/BlogCard";
+import { postData } from "features/posts/types";
 
 export const ViewProfile = () => {
   const { id } = useParams();
@@ -17,7 +17,9 @@ export const ViewProfile = () => {
         <div className="flex flex-col p-4 gap-4">
           <div>
             <>
-              {data.data()?.userName || (
+              {data.data()?.userName ? (
+                <p className="text-xl font-body"> {data.data()?.username}</p>
+              ) : (
                 <div className="flex flex-col gap-4">
                   <p className="font-mono text-[200px]">(≥O≤) </p>
                   <p>"this user does not exist "</p>
@@ -34,10 +36,10 @@ export const ViewProfile = () => {
               {!posts.data?.empty ? (
                 <div className="">
                   <div className="grid p-4 gap-4 md:grid-cols-3 w-full">
-                    {posts.data!.docs.map((doc, ind) => (
+                    {posts.data!.docs.map((doc) => (
                       <BlogCard
                         data={doc.data() as postData}
-                        Key={ind}
+                        Key={doc.id}
                         id={doc.data().id}
                       />
                     ))}

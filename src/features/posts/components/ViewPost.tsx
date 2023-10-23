@@ -2,18 +2,14 @@ import { useGetPost } from "../api/useGetPost";
 import { useParams } from "react-router-dom";
 import { postData } from "../types";
 import { Link } from "react-router-dom";
+import CommentForm from "./CommentForm";
 // import { useUploadImage } from "../api/useUploadImage";
 
 const ViewPost = () => {
   const { id } = useParams();
-  const { data, error, isError, isLoading } = useGetPost(id!);
+  const { data, isLoading } = useGetPost(id!);
 
   const post = data?.data() as postData;
-  if (!isLoading) {
-    console.log(data?.data());
-  } else if (isError) {
-    alert(error);
-  }
   // useUploadImage();
   return (
     <>
@@ -45,6 +41,18 @@ const ViewPost = () => {
             dangerouslySetInnerHTML={{ __html: post.body.content }}
             className="font-body font-light md:w-9/12 lg:w-7/12 mx-auto  p-4 reading-area"
           ></div>
+          <CommentForm
+            id={id || ""}
+            classname="mx-auto flex flex-col gap-4 p-4 items-start"
+          />
+          <div className="options flex mx-auto gap-4 ">
+            <button className="py-4 w-40 border bg-indigo-400">
+              Add to bookmarks
+            </button>
+            <button className="py-4 w-40 border bg-neutral-200 text-indigo-400">
+              share post
+            </button>
+          </div>
         </div>
       ) : (
         <p>The post you're looking for doesnt exist :P</p>

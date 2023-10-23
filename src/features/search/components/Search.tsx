@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 // import { useSearch } from "../api/useSearch";
 import BlogCard from "src/features/home/components/BlogCard";
 import { postData } from "src/features/posts/types";
-import search from "public/search.svg";
 import { GetBlogList } from "src/features/home/api/getBlogList";
 import { Layout } from "src/components/layout";
 
@@ -13,12 +12,11 @@ const Search = () => {
     setParams({ q: e.target.value });
   };
   const { data } = GetBlogList();
-  const handleSubmit = () => {};
   return (
     <Layout>
       <div className="w-full p-4 flex flex-col gap-4">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => e.preventDefault()}
           className="flex items-center justify-center gap-2"
         >
           <input
@@ -28,10 +26,10 @@ const Search = () => {
             type="text"
             value={q}
           />
-          <button type="submit">
+          {/* <button type="submit">
             <span className="sr-only">search</span>
             <img src={search} alt="" />
-          </button>
+          </button> */}
         </form>
         {q.length === 0 && (
           <p className="mx-auto text-center">whatcha looking for?🙃</p>
