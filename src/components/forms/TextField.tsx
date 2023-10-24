@@ -5,8 +5,8 @@ type TextfieldProps = {
   label?: string;
   registration: UseFormRegisterReturn;
   placeholder: string;
-  columns: number;
-  rows: number;
+  columns?: number;
+  rows?: number;
   className?: string;
 };
 

@@ -21,7 +21,7 @@ const Menu = forwardRef(function (props, ref) {
       ];
   return (
     <div
-      className="menu md:w-full bg-neutral-200 px-8 border py-40 top-0 right-0 fixed md:h-screen flex-col hidden gap-4 items-end justify-end"
+      className="menu md:w-1/4 bg-neutral-200 px-8 border py-40 top-0 right-0 fixed md:h-screen flex-col hidden gap-4 items-end justify-end"
       ref={ref as React.LegacyRef<HTMLDivElement>}
       {...props}
     >

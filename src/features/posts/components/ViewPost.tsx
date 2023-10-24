@@ -3,14 +3,15 @@ import { useParams } from "react-router-dom";
 import { postData } from "../types";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
-// import { useUploadImage } from "../api/useUploadImage";
+import CommentCard from "src/components/comments/CommentCard";
+import { setDoc, doc, arrayUnion } from "firebase/firestore";
+import { auth, db } from "src/firebaseconfig";
 
 const ViewPost = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetPost(id!);
-
   const post = data?.data() as postData;
-  // useUploadImage();
+
   return (
     <>
       {isLoading ? (
@@ -39,19 +40,41 @@ const ViewPost = () => {
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: post.body.content }}
-            className="font-body font-light md:w-9/12 lg:w-7/12 mx-auto  p-4 reading-area"
+            className="font-body font-light md:w-9/12 lg:w-7/12 mx-auto p-4 reading-area"
           ></div>
-          <CommentForm
-            id={id || ""}
-            classname="mx-auto flex flex-col gap-4 p-4 items-start"
-          />
-          <div className="options flex mx-auto gap-4 ">
-            <button className="py-4 w-40 border bg-indigo-400">
-              Add to bookmarks
+          {auth.currentUser ? (
+            <button
+              onClick={() => {
+                setDoc(doc(db, `bookmarks/${auth.currentUser?.uid}`), {
+                  bookmarks: arrayUnion(post.head),
+                });
+              }}
+            >
+              bookmark this post
             </button>
-            <button className="py-4 w-40 border bg-neutral-200 text-indigo-400">
-              share post
-            </button>
+          ) : null}
+          {/* //comment section */}
+          <div>
+            {post?.comments && (
+              <>
+                <p className="text-center">Comments:</p>
+                {post.comments.map((comment) => {
+                  return (
+                    <CommentCard
+                      date={comment.date}
+                      author={comment.author}
+                      body={comment.body}
+                    />
+                  );
+                })}
+              </>
+            )}
+            {localStorage.getItem("currentUser") && (
+              <CommentForm
+                id={id!}
+                classname="mx-auto flex flex-col gap-4 p-4 items-start w-2/5"
+              />
+            )}
           </div>
         </div>
       ) : (

@@ -10,9 +10,7 @@ export const Navigation = () => {
   return (
     <nav className="w-full sticky top-0 flex justify-between items-center p-4 font-sans font-medium text-xl bg-neutral-100">
       <Link to={"/"} className="">
-        <span className="text-indigo-600 font-bold uppercase font-body">
-          I r o r i
-        </span>
+        <span className="text-indigo-600 font-bold  ">Irori</span>
       </Link>
       <Link to={"/s"} title="search">
         <span className="sr-only">search</span>

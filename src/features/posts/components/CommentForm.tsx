@@ -1,38 +1,36 @@
 import { useForm } from "react-hook-form";
-import { TextField } from "src/components/forms";
 import { db } from "src/firebaseconfig";
-import { addDoc, collection } from "firebase/firestore";
+import { updateDoc, doc, arrayUnion } from "firebase/firestore";
 
 type commentType = {
   body: string;
 };
 
 type commentProps = {
-  id: string | undefined;
+  id: string;
   classname?: string;
 };
 const CommentForm = ({ id, classname }: commentProps) => {
   const { register, handleSubmit } = useForm<commentType>();
   const onSubmit = (data: commentType) => {
     const comment = {
-      author: JSON.parse(localStorage.getItem("currentUser") ?? "{}"),
+      author: JSON.parse(localStorage.getItem("currentUser")!).displayName,
       body: data.body,
-      date: new Date().toString(),
+      date: new Date().toDateString(),
     };
     console.log(comment);
-    addDoc(collection(db, `comments/${id}/comments`), comment);
+    updateDoc(doc(db, "posts", id), { comments: arrayUnion(comment) });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classname}>
-      <TextField
-        registration={register("body")}
-        columns={30}
-        rows={3}
+      <textarea
+        {...register("body")}
         placeholder="enter your comment here"
+        className="resize-none w-4/5"
+        rows={3}
       />
-      <button type="submit" className="bg-indigo-400 px-4 py-2 rounded-lg">
-        {" "}
-        submit
+      <button type="submit" className="bg-indigo-400 px-4 py-2 rounded ">
+        comment
       </button>
     </form>
   );

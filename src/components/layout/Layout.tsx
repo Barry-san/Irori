@@ -7,7 +7,7 @@ type layoutProps = {
 
 export const Layout = ({ children }: layoutProps) => {
   return (
-    <div className="w-full  min-h-screen  bg-neutral-100">
+    <div className="w-full p-4 min-h-screen  bg-neutral-100">
       <Navigation />
       {children}
       {/* <Footer /> */}

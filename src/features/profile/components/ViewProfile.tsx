@@ -18,10 +18,12 @@ export const ViewProfile = () => {
           <div>
             <>
               {data.data()?.userName ? (
-                <p className="text-xl font-body"> {data.data()?.username}</p>
+                <p className="text-xl md:text-3xl font-body">
+                  {data.data()?.userName}
+                </p>
               ) : (
                 <div className="flex flex-col gap-4">
-                  <p className="font-mono text-[200px]">(≥O≤) </p>
+                  <p className="font-mono text-lg">(≥O≤) </p>
                   <p>"this user does not exist "</p>
                 </div>
               )}

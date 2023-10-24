@@ -1,15 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "src/firebaseconfig";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "src/firebaseconfig";
 
-const useGetDrafts = (id: string) => {
-  return useQuery([`getDrafts${id}`], () => {
-    if (auth.currentUser?.uid !== id) {
-      return null;
-    } else {
-      return getDocs(collection(db, `drafts/${id}/drafts`));
-    }
-  });
+const useGetDrafts = (id: string, uid: string) => {
+  return async () => {
+    return getDoc(doc(db, `drafts/${uid}/drafts/${id}`));
+  };
 };
 
 export default useGetDrafts;

@@ -11,4 +11,9 @@ export type postData = {
   body: {
     content: string;
   };
+  comments?: {
+    author: string;
+    body: string;
+    date: string;
+  }[];
 };

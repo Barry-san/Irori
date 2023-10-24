@@ -40,10 +40,14 @@ const Search = () => {
           <div className="w-full grid md:grid-cols-3">
             {!!q.length &&
               data?.docs
-                .filter((doc) =>
-                  (doc.data() as postData).head.title
-                    .toLowerCase()
-                    .includes(q.toLowerCase())
+                .filter(
+                  (doc) =>
+                    (doc.data() as postData).head.title
+                      .toLowerCase()
+                      .includes(q.toLowerCase()) ||
+                    (doc.data() as postData).head.description
+                      .toLowerCase()
+                      .includes(q.toLowerCase())
                 )
                 .map((doc) => {
                   console.log(doc.data());

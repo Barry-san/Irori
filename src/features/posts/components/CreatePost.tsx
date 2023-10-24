@@ -1,15 +1,16 @@
+import CreateDraft from "../api/useCreateDraft";
+import { useUploadImage } from "../api/useUploadImage";
 import { postData } from "../types";
 import { InputField, SelectField, TextField } from "components/forms";
 import { useCreatePost } from "features/posts/api/useCreatePost";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { User } from "firebase/auth";
-import { useUploadImage } from "../api/useUploadImage";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
-import CreateDraft from "../api/useCreateDraft";
 import "react-quill/dist/quill.snow.css";
+import useGetDrafts from "src/features/profile/api/useGetDrafts";
 
 type PostFormData = {
   postTitle: string;
@@ -18,9 +19,18 @@ type PostFormData = {
   postThumbnail: FileList;
 };
 const CreatePost = () => {
+  const { id = "" } = useParams();
+  const user = JSON.parse(localStorage.getItem("currentUser")!) as User;
+  const getDraft = useGetDrafts(id, user.uid);
   const [value, setValue] = useState("");
   const { register, handleSubmit, formState, getValues } =
-    useForm<PostFormData>();
+    useForm<PostFormData>({
+      defaultValues: async () => {
+        const draft = await getDraft();
+        setValue((draft.data()!.postContent as string) || "");
+        return draft.data() as PostFormData;
+      },
+    });
   const { errors } = formState;
   const createPost = useCreatePost();
   const navigate = useNavigate();
@@ -39,9 +49,7 @@ const CreatePost = () => {
         category: category,
         date: new Date().toDateString(),
         description: postDescription,
-        author:
-          (JSON.parse(localStorage.getItem("currentUser")!) as User)
-            .displayName ?? "Anonymous",
+        author: user.displayName ?? "Anonymous",
         thumbnail: "",
       },
       body: { content: value },
@@ -62,15 +70,20 @@ const CreatePost = () => {
   return (
     <div>
       <button
-        className="border py-4 px-8 bg-white border-slate-600"
+        className="border py-2 px-8 bg-white border-slate-600 my-2"
         role="none"
         onClick={() => {
           const { postDescription, postTitle, category } = getValues();
-          CreateDraft({
-            postContent: value,
-            postTitle,
-            postDescription,
-            category,
+          CreateDraft(
+            {
+              postContent: value,
+              postTitle,
+              postDescription,
+              category,
+            },
+            user.uid
+          ).then(() => {
+            navigate("/");
           });
         }}
       >

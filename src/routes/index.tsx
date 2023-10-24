@@ -23,6 +23,9 @@ function AppRoutes() {
     () => import("src/features/posts/routes/CreatePostRoute")
   );
   const Profile = lazy(() => import("src/features/profile/routes/Profile"));
+  const Bookmarks = lazy(
+    () => import("src/features/bookmarks/components/Bookmarks")
+  );
 
   const commonRoutes = [
     { path: "/", element: <Home /> },
@@ -34,6 +37,8 @@ function AppRoutes() {
     { path: "/auth/login", element: <Login /> },
     { path: "/auth/register", element: <Register /> },
     { path: "/post/new", element: <CreatePost /> },
+    { path: "/post/new/:id", element: <CreatePost /> },
+    { path: "/bookmarks", element: <Bookmarks /> },
   ];
   const routes = user ? protectedRoutes : publicRoutes;
 
