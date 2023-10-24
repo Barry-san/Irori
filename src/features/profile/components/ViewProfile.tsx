@@ -8,7 +8,6 @@ export const ViewProfile = () => {
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProfile(id!);
   const posts = useGetUserPosts(id!);
-  console.log(posts.data);
   return (
     <div>
       {isLoading ? <p>Loading...</p> : ""}
