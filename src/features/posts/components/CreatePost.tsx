@@ -16,26 +16,36 @@ type PostFormData = {
   postTitle: string;
   category: string;
   postDescription: string;
-  postThumbnail: FileList;
+  postThumbnail?: FileList;
 };
+
 const CreatePost = () => {
-  const { id = "" } = useParams();
-  const user = JSON.parse(localStorage.getItem("currentUser")!) as User;
-  const getDraft = useGetDrafts(id, user.uid);
+  const { id = "" } = useParams(); // get the id from url if available
+  const user = JSON.parse(localStorage.getItem("currentUser")!) as User; // get current user from local storage
+  const getDraft = useGetDrafts(id); // retrieve draft is id is available
   const [value, setValue] = useState("");
+
+  //register form fields and set default values from draft if available
   const { register, handleSubmit, formState, getValues } =
     useForm<PostFormData>({
       defaultValues: async () => {
         const draft = await getDraft();
         setValue((draft.data()!.postContent as string) || "");
-        return draft.data() as PostFormData;
+        const temp = draft.data() as postData;
+        return {
+          postTitle: temp.head.title,
+          postDescription: temp.head.description,
+          category: temp.head.category,
+        };
       },
     });
   const { errors } = formState;
+
   const createPost = useCreatePost();
   const navigate = useNavigate();
   const UploadImage = useUploadImage();
 
+  // onsubmit function to create posts and upload post image
   const onSubmit = ({
     postTitle,
     category,
@@ -54,7 +64,7 @@ const CreatePost = () => {
       },
       body: { content: value },
     };
-    UploadImage(postThumbnail.item(0)!).then(({ url, error }) => {
+    UploadImage(postThumbnail!.item(0)!).then(({ url, error }) => {
       if (!error) {
         post.head.thumbnail = url;
         createPost(post)
@@ -74,15 +84,20 @@ const CreatePost = () => {
         role="none"
         onClick={() => {
           const { postDescription, postTitle, category } = getValues();
-          CreateDraft(
-            {
-              postContent: value,
-              postTitle,
-              postDescription,
-              category,
+          CreateDraft({
+            head: {
+              title: postTitle,
+              category: category,
+              date: new Date().toDateString(),
+              description: postDescription,
+              author: "",
+              thumbnail: "",
+              uid: user.uid,
             },
-            user.uid
-          ).then(() => {
+            body: {
+              content: value,
+            },
+          }).then(() => {
             navigate("/");
           });
         }}

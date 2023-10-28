@@ -3,11 +3,15 @@ import { useGetProfile } from "../api/useGetProfile";
 import useGetUserPosts from "../api/useGetUserPosts";
 import BlogCard from "features/home/components/BlogCard";
 import { postData } from "features/posts/types";
+import useGetUserDrafts from "../api/useGetUserDrafts";
 
 export const ViewProfile = () => {
+  const user = JSON.parse(localStorage.getItem("currentUser") || "");
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProfile(id!);
+  const drafts = useGetUserDrafts(id!);
   const posts = useGetUserPosts(id!);
+  console.log(drafts.data);
   return (
     <div>
       {isLoading ? <p>Loading...</p> : ""}
@@ -53,6 +57,26 @@ export const ViewProfile = () => {
           )}
         </div>
       )}
+      <div className="drafts">
+        {user.uid === id ? (
+          <>
+            <p className="font-medium">Drafts:</p>
+            <div>
+              {drafts.data?.docs.map((doc) => {
+                console.log(doc.data());
+                return (
+                  <BlogCard
+                    data={doc.data() as postData}
+                    id={doc.id}
+                    Key={doc.id}
+                    key={doc.id}
+                  />
+                );
+              })}
+            </div>
+          </>
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { db } from "src/firebaseconfig";
 import { updateDoc, doc, arrayUnion } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 type commentType = {
   body: string;
@@ -11,15 +12,19 @@ type commentProps = {
   classname?: string;
 };
 const CommentForm = ({ id, classname }: commentProps) => {
-  const { register, handleSubmit } = useForm<commentType>();
+  const { register, handleSubmit, reset } = useForm<commentType>();
   const onSubmit = (data: commentType) => {
     const comment = {
       author: JSON.parse(localStorage.getItem("currentUser")!).displayName,
       body: data.body,
       date: new Date().toDateString(),
     };
-    console.log(comment);
-    updateDoc(doc(db, "posts", id), { comments: arrayUnion(comment) });
+    updateDoc(doc(db, "posts", id), { comments: arrayUnion(comment) })
+      .then(() => {
+        toast.success("comment added.");
+        reset();
+      })
+      .catch((err) => toast(err.message));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classname}>

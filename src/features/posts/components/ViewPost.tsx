@@ -4,8 +4,6 @@ import { postData } from "../types";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import CommentCard from "src/components/comments/CommentCard";
-import { setDoc, doc, arrayUnion } from "firebase/firestore";
-import { auth, db } from "src/firebaseconfig";
 
 const ViewPost = () => {
   const { id } = useParams();
@@ -42,17 +40,7 @@ const ViewPost = () => {
             dangerouslySetInnerHTML={{ __html: post.body.content }}
             className="font-body font-light md:w-9/12 lg:w-7/12 mx-auto p-4 reading-area"
           ></div>
-          {auth.currentUser ? (
-            <button
-              onClick={() => {
-                setDoc(doc(db, `bookmarks/${auth.currentUser?.uid}`), {
-                  bookmarks: arrayUnion(post.head),
-                });
-              }}
-            >
-              bookmark this post
-            </button>
-          ) : null}
+
           {/* //comment section */}
           <div>
             {post?.comments && (
@@ -72,7 +60,7 @@ const ViewPost = () => {
             {localStorage.getItem("currentUser") && (
               <CommentForm
                 id={id!}
-                classname="mx-auto flex flex-col gap-4 p-4 items-start w-2/5"
+                classname="mx-auto flex flex-col gap-4 p-4 items-start w-full md:w-2/5"
               />
             )}
           </div>
