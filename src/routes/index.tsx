@@ -1,13 +1,12 @@
 import { useRoutes } from "react-router-dom";
 import { publicRoutes } from "./public";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { Suspense, lazy } from "react";
+import { auth } from "src/firebaseconfig";
 import Search from "src/features/search/components/Search";
 import Post from "src/features/posts/routes/Post";
 
 function AppRoutes() {
-  const auth = getAuth();
-
   onAuthStateChanged(auth, (user) => {
     if (user) {
       localStorage.setItem("currentUser", JSON.stringify(user));
