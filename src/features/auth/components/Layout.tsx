@@ -15,7 +15,6 @@ export const AuthLayout = (props: layoutProps) => {
   const handleGoogleLogin = async () => {
     await signInWithPopup(auth, new GoogleAuthProvider())
       .then((res) => {
-        alert(res);
         addUserToDb(res.user);
       })
       .catch((err) =>
