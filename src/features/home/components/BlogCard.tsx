@@ -4,7 +4,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "src/firebaseconfig";
 import trash from "/trash-solid.svg";
 import toast from "react-hot-toast";
-import { User } from "firebase/auth";
+
 type BlogCardProps = {
   id: string;
   data: Omit<postData, "body">;
@@ -12,7 +12,9 @@ type BlogCardProps = {
 };
 
 const BlogCard = ({ id, data, variant }: BlogCardProps) => {
-  const user = JSON.parse(localStorage.getItem("currentUser") ?? "") as User;
+  const user = JSON.parse(localStorage.getItem("currentUser") ?? "{}");
+  console.log(user);
+  console.log(data);
   return (
     <div className="flex flex-col p-2 border gap-4 border-indigo-400 rounded-lg justify-between ">
       <div className="flex flex-col gap-2">
