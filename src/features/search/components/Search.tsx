@@ -26,10 +26,6 @@ const Search = () => {
             type="text"
             value={q}
           />
-          {/* <button type="submit">
-            <span className="sr-only">search</span>
-            <img src={search} alt="" />
-          </button> */}
         </form>
         {q.length === 0 && (
           <p className="mx-auto text-center">whatcha looking for?🙃</p>
@@ -55,7 +51,8 @@ const Search = () => {
                     <BlogCard
                       data={doc.data() as postData}
                       id={doc.id}
-                      Key={doc.id}
+                      key={doc.id}
+                      variant={"post"}
                     />
                   );
                 })}

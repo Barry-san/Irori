@@ -13,7 +13,7 @@ const Bookmarks = () => {
         <>
           {(data.data() as bookmarkType).bookmarks.map((doc, ind) => {
             console.log(doc);
-            return <BlogCard data={doc} id="hi" Key={ind} />;
+            return <BlogCard data={doc} id="hi" key={ind} variant={"post"} />;
           })}
         </>
       ) : (
