@@ -44,8 +44,9 @@ export const ViewProfile = () => {
                     {posts.data!.docs.map((doc) => (
                       <BlogCard
                         data={doc.data() as postData}
-                        Key={doc.id}
                         id={doc.data().id}
+                        key={doc.id}
+                        variant={"post"}
                       />
                     ))}
                   </div>
@@ -68,8 +69,8 @@ export const ViewProfile = () => {
                   <BlogCard
                     data={doc.data() as postData}
                     id={doc.id}
-                    Key={doc.id}
                     key={doc.id}
+                    variant={"draft"}
                   />
                 );
               })}

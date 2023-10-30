@@ -17,7 +17,6 @@ export const AuthLayout = (props: layoutProps) => {
       .then((res) => {
         alert(res);
         addUserToDb(res.user);
-        navigate("/");
       })
       .catch((err) =>
         toast.error(err.message, {
@@ -38,7 +37,7 @@ export const AuthLayout = (props: layoutProps) => {
       <div>
         <button
           className="border w-full py-2 my-2 border-indigo-400 flex items-center justify-center gap-4"
-          onClick={handleGoogleLogin}
+          onClick={() => handleGoogleLogin().then(() => navigate("/"))}
         >
           <span>sign in with google </span>
           <img src={google} alt="" className="inline w-4 h-4" />

@@ -15,6 +15,7 @@ function AppRoutes() {
       localStorage.clear();
     }
   });
+
   const user = localStorage.getItem("currentUser");
   const Home = lazy(() => import("src/features/home/components/Home"));
   const Register = lazy(() => import("src/features/auth/components/Register"));

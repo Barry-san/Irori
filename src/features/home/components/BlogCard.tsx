@@ -8,25 +8,25 @@ import { User } from "firebase/auth";
 type BlogCardProps = {
   id: string;
   data: Omit<postData, "body">;
-  Key: string | number;
+  variant: "post" | "draft";
 };
 
-const BlogCard = ({ id, data, Key }: BlogCardProps) => {
+const BlogCard = ({ id, data, variant }: BlogCardProps) => {
   const user = JSON.parse(localStorage.getItem("currentUser") ?? "") as User;
   return (
-    <div
-      className="flex flex-col p-2 border gap-4 border-indigo-400 rounded-lg justify-between "
-      key={Key}
-    >
+    <div className="flex flex-col p-2 border gap-4 border-indigo-400 rounded-lg justify-between ">
       <div className="flex flex-col gap-2">
-        <Link to={`/post/${id}`} className="flex flex-col gap-2">
+        <Link
+          to={`/${variant == "post" ? "post" : "post/new"}/${id}`}
+          className="flex flex-col gap-2"
+        >
           <img
             src={data.head.thumbnail}
             alt=""
             className="aspect-video object-cover object-center rounded-lg"
           />
         </Link>
-        <Link to={`/post/${id}`}>
+        <Link to={`/${variant == "post" ? "post" : "post/new"}/${id}`}>
           <h1 className="text-lg font-display font-bold">{data.head.title}</h1>
         </Link>
         <p className="underline italic">
@@ -43,8 +43,10 @@ const BlogCard = ({ id, data, Key }: BlogCardProps) => {
         <button
           className="w-4 h-4 border"
           onClick={() => {
-            toast.loading("deleting post...");
-            deleteDoc(doc(db, "posts", id));
+            toast("deleting post...");
+            deleteDoc(
+              doc(db, `${variant === "post" ? "posts" : "drafts"}`, id)
+            ).then(() => toast(`${variant} deleted`));
           }}
         >
           <span className="sr-only">Delete post</span>

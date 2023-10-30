@@ -39,7 +39,6 @@ export default function useLogin() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithRedirect(auth, provider);
-      // addUserToDb();
       setPending(false);
       navigate("/");
     } catch (error) {

@@ -13,7 +13,7 @@ const Home = () => {
           ? data.docs.map((doc) => {
               const blog = doc.data() as postData;
               const id = doc.id;
-              return <BlogCard data={blog} Key={id} id={id} />;
+              return <BlogCard data={blog} key={id} id={id} variant={"post"} />;
             })
           : ""}
         {error ? "an error occured. Check your connection and try again" : ""}

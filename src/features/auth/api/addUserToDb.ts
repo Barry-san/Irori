@@ -1,4 +1,3 @@
-// import { useQuery } from "@tanstack/react-query";
 import { db } from "src/firebaseconfig";
 import { setDoc, doc } from "firebase/firestore";
 import { User } from "firebase/auth";
