@@ -41,7 +41,7 @@ const BlogCard = ({ id, data, variant }: BlogCardProps) => {
       <p className="text-xs block font-semibold capitalize text-right">
         {data.head.category}
       </p>
-      {user.uid === data.head.uid ? (
+      {(user.uid ? user.uid : "no user") === data.head.uid ? (
         <button
           className="w-4 h-4 border"
           onClick={() => {
