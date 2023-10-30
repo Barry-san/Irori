@@ -6,7 +6,7 @@ import { postData } from "features/posts/types";
 import useGetUserDrafts from "../api/useGetUserDrafts";
 
 export const ViewProfile = () => {
-  const user = JSON.parse(localStorage.getItem("currentUser") || "");
+  const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProfile(id!);
   const drafts = useGetUserDrafts(id!);
