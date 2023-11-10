@@ -60,6 +60,7 @@ const CreatePost = () => {
         date: new Date().toDateString(),
         description: postDescription,
         author: user.displayName ?? "Anonymous",
+        uid: user.uid,
         thumbnail: "",
       },
       body: { content: value },
