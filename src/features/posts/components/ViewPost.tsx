@@ -4,8 +4,10 @@ import { postData } from "../types";
 import { Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import CommentCard from "src/components/comments/CommentCard";
+import { useUserContext } from "src/context/UserContext";
 
 const ViewPost = () => {
+  const user = useUserContext();
   const { id } = useParams();
   const { data, isLoading } = useGetPost(id!);
   const post = data?.data() as postData;
@@ -57,12 +59,12 @@ const ViewPost = () => {
                 })}
               </>
             )}
-            {localStorage.getItem("currentUser") && (
+            {user ? (
               <CommentForm
                 id={id!}
                 classname="mx-auto flex flex-col gap-4 p-4 items-start w-full md:w-2/5"
               />
-            )}
+            ) : null}
           </div>
         </div>
       ) : (

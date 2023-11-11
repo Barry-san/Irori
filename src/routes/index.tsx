@@ -1,21 +1,12 @@
 import { useRoutes } from "react-router-dom";
 import { publicRoutes } from "./public";
-import { onAuthStateChanged } from "firebase/auth";
 import { Suspense, lazy } from "react";
-import { auth } from "src/firebaseconfig";
 import Search from "src/features/search/components/Search";
 import Post from "src/features/posts/routes/Post";
+import { useUserContext } from "src/context/UserContext";
 
 function AppRoutes() {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      localStorage.setItem("currentUser", JSON.stringify(user));
-    } else {
-      localStorage.clear();
-    }
-  });
-
-  const user = localStorage.getItem("currentUser");
+  const user = useUserContext();
   const Home = lazy(() => import("src/features/home/components/Home"));
   const Register = lazy(() => import("src/features/auth/components/Register"));
   const Login = lazy(() => import("src/features/auth/components/Login"));

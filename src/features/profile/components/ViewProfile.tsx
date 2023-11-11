@@ -4,9 +4,10 @@ import useGetUserPosts from "../api/useGetUserPosts";
 import BlogCard from "features/home/components/BlogCard";
 import { postData } from "features/posts/types";
 import useGetUserDrafts from "../api/useGetUserDrafts";
+import { useUserContext } from "src/context/UserContext";
 
 export const ViewProfile = () => {
-  const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
+  const user = useUserContext();
   const { id } = useParams();
   const { data, isLoading, isError } = useGetProfile(id!);
   const drafts = useGetUserDrafts(id!);
@@ -59,7 +60,7 @@ export const ViewProfile = () => {
         </div>
       )}
       <div className="drafts">
-        {user.uid === id ? (
+        {user?.uid === id ? (
           <>
             <p className="font-medium">Drafts:</p>
             <div>

@@ -4,6 +4,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "src/firebaseconfig";
 import trash from "/trash-solid.svg";
 import toast from "react-hot-toast";
+import { useUserContext } from "src/context/UserContext";
 
 type BlogCardProps = {
   id: string;
@@ -12,9 +13,7 @@ type BlogCardProps = {
 };
 
 const BlogCard = ({ id, data, variant }: BlogCardProps) => {
-  const user = JSON.parse(localStorage.getItem("currentUser") ?? "{}");
-  console.log(user);
-  console.log(data);
+  const user = useUserContext();
   return (
     <div className="flex flex-col p-2 border gap-4 border-indigo-400 rounded-lg justify-between ">
       <div className="flex flex-col gap-2">
@@ -41,7 +40,7 @@ const BlogCard = ({ id, data, variant }: BlogCardProps) => {
       <p className="text-xs block font-semibold capitalize text-right">
         {data.head.category}
       </p>
-      {(user.uid ? user.uid : "no user") === data.head.uid ? (
+      {user?.uid === data.head.uid ? (
         <button
           className="w-4 h-4 border"
           onClick={() => {

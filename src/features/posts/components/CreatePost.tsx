@@ -3,7 +3,7 @@ import { useUploadImage } from "../api/useUploadImage";
 import { postData } from "../types";
 import { InputField, SelectField, TextField } from "components/forms";
 import { useCreatePost } from "features/posts/api/useCreatePost";
-import { User } from "firebase/auth";
+import { useUserContext } from "src/context/UserContext";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -21,9 +21,11 @@ type PostFormData = {
 
 const CreatePost = () => {
   const { id = "" } = useParams(); // get the id from url if available
-  const user = JSON.parse(localStorage.getItem("currentUser")!) as User; // get current user from local storage
+  const user = useUserContext(); // get current user from local storage
   const getDraft = useGetDrafts(id); // retrieve draft is id is available
   const [value, setValue] = useState("");
+  const hi = useUserContext();
+  console.log(hi);
 
   //register form fields and set default values from draft if available
   const { register, handleSubmit, formState, getValues } =
@@ -59,8 +61,8 @@ const CreatePost = () => {
         category: category,
         date: new Date().toDateString(),
         description: postDescription,
-        author: user.displayName ?? "Anonymous",
-        uid: user.uid,
+        author: user?.displayName ?? "Anonymous",
+        uid: user?.uid,
         thumbnail: "",
       },
       body: { content: value },
@@ -93,7 +95,7 @@ const CreatePost = () => {
               description: postDescription,
               author: "",
               thumbnail: "",
-              uid: user.uid,
+              uid: user?.uid,
             },
             body: {
               content: value,

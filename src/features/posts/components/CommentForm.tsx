@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { db } from "src/firebaseconfig";
 import { updateDoc, doc, arrayUnion } from "firebase/firestore";
 import toast from "react-hot-toast";
+import { useUserContext } from "src/context/UserContext";
 
 type commentType = {
   body: string;
@@ -12,10 +13,11 @@ type commentProps = {
   classname?: string;
 };
 const CommentForm = ({ id, classname }: commentProps) => {
+  const user = useUserContext();
   const { register, handleSubmit, reset } = useForm<commentType>();
   const onSubmit = (data: commentType) => {
     const comment = {
-      author: JSON.parse(localStorage.getItem("currentUser")!).displayName,
+      author: user?.displayName,
       body: data.body,
       date: new Date().toDateString(),
     };

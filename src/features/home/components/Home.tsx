@@ -2,8 +2,11 @@ import { GetBlogList } from "../api/getBlogList";
 import { postData } from "src/features/posts/types";
 import BlogCard from "./BlogCard";
 import { Layout } from "components/layout/Layout";
+import { useUserContext } from "src/context/UserContext";
 
 const Home = () => {
+  const user = useUserContext();
+  console.log(user);
   const { data, error, isLoading } = GetBlogList();
   return (
     <Layout>
