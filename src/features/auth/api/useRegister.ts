@@ -4,6 +4,7 @@ import { auth } from "src/firebaseconfig";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUserToDb } from ".";
+import { toast } from "react-hot-toast";
 
 export const useRegister = () => {
   const [pending, setPending] = useState(false);
@@ -31,7 +32,7 @@ export const useRegister = () => {
       setPending(false);
       if (error instanceof FirebaseError) {
         setPending(false);
-        console.log(error);
+        toast(error.message);
       }
     }
   };

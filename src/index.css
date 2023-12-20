@@ -4,11 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-li {
-    list-style: initial;
-}
+
 
 .reading-area a {
     color: blue;
     text-decoration: underline;
+}
+
+ol li {
+    list-style-type: decimal;
+}
+
+ul li {
+    list-style-type: disc;
 }
